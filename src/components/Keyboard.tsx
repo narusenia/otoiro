@@ -25,6 +25,8 @@ export type KeyboardProps = {
   /** 全鍵の下端に 12 音色の帯を表示（学習補助） */
   showColors?: boolean
   labelStyle?: NoteNameStyle
+  /** 鍵盤の高さ（px）。黒鍵は 60% */
+  height?: number
   /** 鍵を押したとき（音は playOnPress が true なら自動で鳴る） */
   onPress?: (midi: number) => void
   playOnPress?: boolean
@@ -38,6 +40,7 @@ export function Keyboard({
   highlight = {},
   showColors = true,
   labelStyle = 'doremi',
+  height = 160,
   onPress,
   playOnPress = true,
   disabled = false,
@@ -71,7 +74,7 @@ export function Keyboard({
 
   return (
     <div ref={scroller} className={cn('overflow-x-auto rounded-lg border bg-card pb-1', className)}>
-      <div className="relative h-40" style={{ width: whites.length * WHITE_W }}>
+      <div className="relative" style={{ width: whites.length * WHITE_W, height }}>
         <div className="flex h-full">
           {whites.map((m) => (
             <button
@@ -102,11 +105,12 @@ export function Keyboard({
               style={{
                 left,
                 width: BLACK_W,
+                height: height * 0.6,
                 ...(highlight[m] ? { backgroundColor: highlight[m] } : {}),
                 ...(showColors ? { boxShadow: `inset 0 -5px 0 0 ${pitchClassColor(m)}` } : {}),
               }}
               className={cn(
-                'absolute top-0 h-24 touch-manipulation rounded-b-md bg-foreground transition-[filter] active:brightness-125 disabled:opacity-60',
+                'absolute top-0 touch-manipulation rounded-b-md bg-foreground transition-[filter] active:brightness-125 disabled:opacity-60',
               )}
             />
           )
