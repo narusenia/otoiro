@@ -5,7 +5,7 @@
 
 ## Phase 0: 土台
 
-- [ ] git init（済）、GitHub リポジトリ作成
+- [x] git init、GitHub リポジトリ作成（narusenia/otoiro、main push 済）
 - [x] Vite + React + TypeScript 作成
 - [x] shadcn 初期化（`--preset b1D0dxoG`）
 - [x] ルーティング（ホーム / コース / 単元 / 自由練習 / 設定）
