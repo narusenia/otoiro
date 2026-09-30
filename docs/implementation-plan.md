@@ -28,12 +28,12 @@
 
 ## Phase 2: 音声・表示部品
 
-- [ ] Salamander サンプル間引き（約30音）→ `public/samples/`
-- [ ] 音声エンジン（Tone.js Sampler / サイン波切替、iOS アンロック）
-- [ ] 12 音カラーパレット（ライト/ダーク）
-- [ ] 鍵盤 UI（スクロール、押下発音、ハイライト、音色表示）
-- [ ] 五線譜部品（VexFlow: ト音/ヘ音、加線、臨時記号、調号）
-- [ ] MDX 埋込部品: `<Play>`, `<Staff>`, `<Keyboard>`
+- [x] Salamander サンプル（C2〜C7、21 音・1.3MB）→ `public/samples/salamander/`（CC BY 3.0 クレジット同梱。アプリ内クレジット表示は Phase 5）
+- [x] 音声エンジン（実機での音出し確認は未）（Tone.js Sampler / サイン波切替、iOS アンロック）
+- [x] 12 音カラーパレット（ライト/ダーク）
+- [x] 鍵盤 UI（目視未確認）（スクロール、押下発音、ハイライト、音色表示）
+- [x] 五線譜部品（目視未確認）（VexFlow: ト音/ヘ音、加線、臨時記号、調号）
+- [x] MDX 埋込部品（`/dev` の確認ページは開発時のみ）: `<Play>`, `<Staff>`, `<Keyboard>`
 
 ## Phase 3: 学習フレーム
 
