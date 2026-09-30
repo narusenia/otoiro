@@ -144,9 +144,12 @@
   --pitch-10: oklch(0.74 0.15 325);
   --pitch-11: oklch(0.74 0.15 355);
   --pitch-fg: oklch(0.2 0 0);
+  /* 五線譜の音符は白背景で明度差が足りないため黒へ寄せる割合（ダークは 0） */
+  --staff-darken: 40%;
 }
 
 .dark {
+  --staff-darken: 0%;
   --pitch-0: oklch(0.78 0.13 25);
   --pitch-1: oklch(0.78 0.13 55);
   --pitch-2: oklch(0.78 0.13 85);
