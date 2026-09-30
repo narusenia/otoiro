@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Accidental, Formatter, Renderer, Stave, StaveNote, Voice } from 'vexflow'
 import { cn } from '@/lib/utils'
 import type { Note } from '@/theory/pitch'
+import { t } from '@/i18n'
 
 // 調号（♯♭の数 -7..7）→ VexFlow の長調名。短調は同じ調号の平行長調を渡す
 const MAJOR_BY_FIFTHS = ['Cb', 'Gb', 'Db', 'Ab', 'Eb', 'Bb', 'F', 'C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#']
@@ -72,5 +73,5 @@ export function Staff({ notes, clef = 'treble', fifths = 0, colors = [], classNa
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signature])
 
-  return <div ref={host} className={cn('text-foreground', className)} role="img" aria-label="五線譜" />
+  return <div ref={host} className={cn('text-foreground', className)} role="img" aria-label={t('staff.label')} />
 }

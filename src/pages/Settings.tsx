@@ -1,5 +1,6 @@
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { updateState, useAppState, type AppState } from '@/store'
+import { t } from '@/i18n'
 
 type Settings = AppState['settings']
 
@@ -36,28 +37,28 @@ export default function SettingsPage() {
   const { settings } = useAppState()
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">設定</h1>
-      <Setting label="音色" name="timbre" value={settings.timbre} options={[['piano', 'ピアノ'], ['sine', 'サイン波']]} />
+      <h1 className="text-2xl font-semibold">{t('settings.title')}</h1>
+      <Setting label={t('settings.timbre')} name="timbre" value={settings.timbre} options={[['piano', t('settings.timbre.piano')], ['sine', t('settings.timbre.sine')]]} />
       <Setting
-        label="音名の表記"
+        label={t('settings.noteStyle')}
         name="noteStyle"
         value={settings.noteStyle}
-        options={[['doremi', 'ドレミ'], ['english', 'C D E'], ['hani', 'ハニホ']]}
+        options={[['doremi', t('settings.noteStyle.doremi')], ['english', t('settings.noteStyle.english')], ['hani', t('settings.noteStyle.hani')]]}
       />
       <Setting
-        label="テーマ"
+        label={t('settings.theme')}
         name="theme"
         value={settings.theme}
-        options={[['system', '端末に合わせる'], ['light', 'ライト'], ['dark', 'ダーク']]}
+        options={[['system', t('settings.theme.system')], ['light', t('settings.theme.light')], ['dark', t('settings.theme.dark')]]}
       />
       <section className="flex flex-col gap-1 text-sm text-muted-foreground">
-        <h2 className="font-medium text-foreground">クレジット</h2>
+        <h2 className="font-medium text-foreground">{t('settings.credits')}</h2>
         <p>
-          ピアノ音源: Salamander Grand Piano V3 by Alexander Holm（
+          {t('settings.creditsBefore')}
           <a className="underline" href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noreferrer">
             CC BY 3.0
           </a>
-          、C2〜C7 を間引いて使用）
+          {t('settings.creditsAfter')}
         </p>
       </section>
     </div>

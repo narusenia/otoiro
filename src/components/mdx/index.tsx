@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { noteColor } from '@/lib/pitch-color'
 import { parseNotes } from '@/theory/parse'
 import { midi } from '@/theory/pitch'
+import { t } from '@/i18n'
 
 /**
  * MDX から使う部品。音は "C4 E4 G4" 形式の文字列で渡す。
@@ -16,7 +17,7 @@ import { midi } from '@/theory/pitch'
 export function Play({
   notes,
   mode = 'sequence',
-  children = '聴く',
+  children = t('mdx.listen'),
 }: {
   notes: string
   /** sequence=順に鳴らす（旋律的）、chord=同時に鳴らす（和声的） */

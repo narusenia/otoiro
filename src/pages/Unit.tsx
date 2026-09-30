@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { findUnit, mdxComponents, unitBody, UNITS } from '@/content'
 import { applySession, unlockedUnits } from '@/learning/progress'
 import { updateState, useAppState } from '@/store'
+import { t } from '@/i18n'
 
 export default function Unit() {
   const { courseId = '', unitId = '' } = useParams()
@@ -12,32 +13,32 @@ export default function Unit() {
   const unit = findUnit(`${courseId}/${unitId}`)
   const [step, setStep] = useState<'lesson' | 'drill'>('lesson')
 
-  if (!unit) return <p>単元が見つからない。</p>
+  if (!unit) return <p>{t('unit.notFound')}</p>
   const Body = unitBody(unit)
   const locked = !unlockedUnits(UNITS, progress).has(unit.id)
 
   return (
     <div className="flex flex-col gap-6">
       <Link to={`/course/${courseId}`} className="text-muted-foreground text-sm underline">
-        コースに戻る
+        {t('unit.backToCourse')}
       </Link>
       <h1 className="text-2xl font-semibold">{unit.title}</h1>
       {locked && (
         <p role="note" className="rounded-md border border-amber-500/50 bg-amber-500/10 p-3 text-sm">
-          前の単元にまだ合格していない。このまま進めてもよい。
+          {t('unit.lockedWarning')}
         </p>
       )}
       {step === 'lesson' ? (
         <>
           <article className="prose dark:prose-invert max-w-none">
-            <Suspense fallback={<p>読み込み中…</p>}>
+            <Suspense fallback={<p>{t('unit.loading')}</p>}>
               {/* unitBody は単元ごとにキャッシュ済みの部品を返す（描画のたびに作り直さない） */}
               {/* oxlint-disable-next-line react/static-components */}
               <Body components={mdxComponents} />
             </Suspense>
           </article>
           <Button size="lg" onClick={() => setStep('drill')}>
-            練習へ進む
+            {t('unit.toDrill')}
           </Button>
         </>
       ) : (
