@@ -1,4 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
+import { sendKey } from '@/audio/keyInput'
 import { Keyboard } from '@/components/Keyboard'
 import { Button } from '@/components/ui/button'
 import { updateState, useAppState } from '@/store'
@@ -21,7 +22,7 @@ export function PianoDock() {
           {open ? '閉じる' : '開く'}
         </Button>
       </div>
-      {open && <Keyboard from={48} to={83} height={112} labelStyle={settings.noteStyle} className="rounded-none border-0 border-t" />}
+      {open && <Keyboard from={48} to={83} height={112} labelStyle={settings.noteStyle} onPress={sendKey} className="rounded-none border-0 border-t" />}
     </div>
   )
 }

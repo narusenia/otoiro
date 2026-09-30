@@ -21,6 +21,8 @@ export type Question = {
   /** 回答後の比較再生。省略時は play と同じ */
   reveal?: number[][]
   answer: Answer
+  /** 回答後に表示する正解の視覚表示（正解の譜面など） */
+  revealView?: ReactNode
   /** 回答後に出す一言解説 */
   explanation?: string
 }

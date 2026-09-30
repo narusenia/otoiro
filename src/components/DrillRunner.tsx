@@ -1,6 +1,7 @@
 import { CheckIcon, RotateCcwIcon, Volume2Icon, XIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { playSteps } from '@/audio/engine'
+import { registerKeySink } from '@/audio/keyInput'
 import { Keyboard } from '@/components/Keyboard'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -34,6 +35,27 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
   const [keys, setKeys] = useState<number[]>([])
   const [audioError, setAudioError] = useState(false)
 
+  const answer = (correct: boolean) => {
+    if (!q) return
+    setResults((r) => [...r, correct])
+    setPhase('answered')
+    updateState((s) => ({ ...s, weights: updateWeights(s.weights, q.itemId, correct) }))
+    markStudiedToday()
+  }
+
+  const pressKey = (m: number) => {
+    if (phase !== 'asking' || q?.answer.kind !== 'keys') return
+    const next = [...keys, m]
+    setKeys(next)
+    // 異名同音は同じ鍵として扱う（MIDI 番号で比較）
+    if (next.length === q.answer.correct.length) answer(next.every((k, i) => k === (q.answer as { correct: number[] }).correct[i]))
+  }
+
+  // 画面下のピアノが開いていれば、それを回答鍵盤として使う（閉じているときは内蔵の鍵盤を出す）
+  const useDock = app.settings.showPiano
+  const waitingForKeys = phase === 'asking' && q?.answer.kind === 'keys'
+  useEffect(() => (waitingForKeys && useDock ? registerKeySink(pressKey) : undefined))
+
   if (!drill) return <p className="text-muted-foreground">このドリルは準備中。</p>
 
   const play = (steps: number[][]) => {
@@ -55,26 +77,11 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
     ask()
   }
 
-  const answer = (correct: boolean) => {
-    if (!q) return
-    setResults((r) => [...r, correct])
-    setPhase('answered')
-    updateState((s) => ({ ...s, weights: updateWeights(s.weights, q.itemId, correct) }))
-    markStudiedToday()
-  }
-
   const advance = () => {
     if (results.length >= total) {
       setPhase('done')
       onFinish?.(results)
     } else ask()
-  }
-
-  const pressKey = (m: number) => {
-    if (phase !== 'asking' || q?.answer.kind !== 'keys') return
-    const next = [...keys, m]
-    setKeys(next)
-    if (next.length === q.answer.correct.length) answer(next.every((k, i) => k === (q.answer as { correct: number[] }).correct[i]))
   }
 
   if (phase === 'ready') {
@@ -171,10 +178,15 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
               <p className="text-muted-foreground text-sm">
                 鍵盤で {q.answer.correct.length} 音を順に押す（{keys.length} / {q.answer.correct.length}）
               </p>
-              <Keyboard onPress={pressKey} disabled={answered} />
+              {useDock ? (
+                <p className="text-muted-foreground text-xs">画面下のピアノで答える。</p>
+              ) : (
+                <Keyboard onPress={pressKey} disabled={answered} />
+              )}
             </div>
           )}
 
+          {answered && q.revealView}
           {answered && q.explanation && <p className="text-muted-foreground text-sm">{q.explanation}</p>}
         </CardContent>
         {answered && (
