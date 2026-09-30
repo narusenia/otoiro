@@ -9,7 +9,7 @@
 - [x] Vite + React + TypeScript 作成
 - [x] shadcn 初期化（`--preset b1D0dxoG`）
 - [x] ルーティング（ホーム / コース / 単元 / 自由練習 / 設定）
-- [x] `cloudflare.config.ts`（Static Assets, SPA fallback）（`cf deploy --dry-run` まで確認済）→ `cf deploy` で初回疎通は未実施
+- [x] `cloudflare.config.ts`（Static Assets, SPA fallback）（`cf deploy --dry-run` まで確認済）→ `cf deploy` で初回疎通済（https://otoiro.notshinsin0000.workers.dev）
 - [ ] Workers Builds を GitHub 連携、PR プレビュー確認
 - [x] Vitest 導入
 - [x] i18n 基盤（文言キー、`ja` のみ）
