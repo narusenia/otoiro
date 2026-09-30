@@ -1,0 +1,4 @@
+Salamander Grand Piano V3 by Alexander Holm
+Licensed under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+Source: https://archive.org/details/SalamanderGrandPianoV3
+Files are the subset (C2-C7, minor-third spacing) hosted by Tone.js at https://tonejs.github.io/audio/salamander/
