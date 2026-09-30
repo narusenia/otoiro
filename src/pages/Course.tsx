@@ -22,7 +22,7 @@ export default function Course() {
           const open = unlocked.has(u.id)
           const p = progress[u.id]
           const card = (
-            <Card className={open ? 'transition-colors hover:bg-muted/50' : 'opacity-60'}>
+            <Card className={'transition-colors hover:bg-muted/50' + (open ? '' : ' opacity-60')}>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   {u.title}
@@ -35,7 +35,7 @@ export default function Course() {
                   {!open && (
                     <Badge variant="outline">
                       <LockIcon data-icon="inline-start" />
-                      前の単元に合格すると解放
+                      前の単元が未合格
                     </Badge>
                   )}
                 </CardTitle>
@@ -44,12 +44,10 @@ export default function Course() {
               </CardHeader>
             </Card>
           )
-          return open ? (
+          return (
             <Link key={u.id} to={`/course/${u.course}/${u.slug}`}>
               {card}
             </Link>
-          ) : (
-            <div key={u.id}>{card}</div>
           )
         })}
       </div>
