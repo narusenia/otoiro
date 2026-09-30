@@ -9,7 +9,9 @@ import { midi } from '@/theory/pitch'
 
 /**
  * MDX から使う部品。音は "C4 E4 G4" 形式の文字列で渡す。
- * <Play notes="C4 E4" mode="chord">和音を聴く</Play>
+ * <Play notes="C4 E4">旋律的に順に鳴らす</Play>
+ * <Play notes="C4 E4 G4" mode="chord">同時に鳴らす</Play>
+ * <Play notes="C4 E4 G4 | F4 A4 C5">"|" で区切ると、区切りごとに同時発音（和音の連続）</Play>
  */
 export function Play({
   notes,
@@ -21,9 +23,11 @@ export function Play({
   mode?: 'sequence' | 'chord'
   children?: React.ReactNode
 }) {
-  const ms = parseNotes(notes).map(midi)
+  const toMidis = (text: string) => parseNotes(text).map(midi)
+  const steps =
+    mode === 'chord' ? [toMidis(notes)] : notes.includes('|') ? notes.split('|').map(toMidis) : toMidis(notes).map((m) => [m])
   return (
-    <Button variant="outline" onClick={() => void playSteps(mode === 'chord' ? [ms] : ms.map((m) => [m]))}>
+    <Button variant="outline" onClick={() => void playSteps(steps)}>
       <PlayIcon data-icon="inline-start" />
       {children}
     </Button>
