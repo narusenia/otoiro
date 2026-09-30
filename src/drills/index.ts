@@ -1,8 +1,15 @@
 import type { DrillType } from '@/learning/types'
+import { chordDrill } from './chord'
+import { degreeDrill } from './degree'
 import { intervalDrill } from './interval'
+import { melodyDrill } from './melody'
+import { staffDrill } from './staff'
 import type { Drill } from './types'
 
-// ponytail: 和音・五線譜・度数・メロディは Phase 4 で追加。未登録の type はランナーが「準備中」を出す
-export const DRILLS: Partial<Record<DrillType, Drill>> = {
+export const DRILLS: Record<DrillType, Drill> = {
   interval: intervalDrill,
+  chord: chordDrill,
+  staff: staffDrill,
+  degree: degreeDrill,
+  melody: melodyDrill,
 }
