@@ -8,11 +8,11 @@
 - [ ] git init（済）、GitHub リポジトリ作成
 - [x] Vite + React + TypeScript 作成
 - [x] shadcn 初期化（`--preset b1D0dxoG`）
-- [ ] ルーティング（ホーム / コース / 単元 / 自由練習 / 設定）
+- [x] ルーティング（ホーム / コース / 単元 / 自由練習 / 設定）
 - [x] `cloudflare.config.ts`（Static Assets, SPA fallback）（`cf deploy --dry-run` まで確認済）→ `cf deploy` で初回疎通は未実施
 - [ ] Workers Builds を GitHub 連携、PR プレビュー確認
-- [ ] Vitest 導入
-- [ ] i18n 基盤（文言キー、`ja` のみ）
+- [x] Vitest 導入
+- [x] i18n 基盤（文言キー、`ja` のみ）
 
 ## Phase 1: 音楽理論コア（Vitest 対象）
 
