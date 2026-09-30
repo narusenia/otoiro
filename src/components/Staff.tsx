@@ -46,8 +46,12 @@ export function Staff({ notes, clef = 'treble', fifths = 0, colors = [], classNa
     if (notes.length > 0) {
       const staveNotes = notes.map((n, i) => {
         const sn = new StaveNote({ keys: [vexKey(n)], duration: 'q', clef })
-        const c = colors[i]
-        if (c) sn.setStyle({ fillStyle: c, strokeStyle: c })
+        // stem・加線は setStyle の対象外で既定の黒になるため個別に指定
+        const c = colors[i] ?? 'currentColor'
+        const style = { fillStyle: c, strokeStyle: c }
+        sn.setStyle(style)
+        sn.setStemStyle(style)
+        sn.setLedgerLineStyle(style)
         return sn
       })
       const voice = new Voice({ numBeats: staveNotes.length, beatValue: 4 })
