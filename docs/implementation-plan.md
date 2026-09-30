@@ -70,7 +70,7 @@
 
 ## Phase 5: 仕上げ
 
-- [ ] PWA（vite-plugin-pwa、サンプル含むプリキャッシュ、更新通知）
+- [x] PWA（vite-plugin-pwa、サンプル含むプリキャッシュ、autoUpdate。アイコンは favicon.svg のみで PNG 未用意）
 - [ ] スマホ実機確認（iOS Safari / Android Chrome）
 - [ ] ダークモード・アクセシビリティ確認（コントラスト、キーボード操作、色だけに頼らない正誤表示）
 - [ ] 本番デプロイ
