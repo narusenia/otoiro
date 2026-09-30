@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react'
+import { lazy, type ComponentType, type LazyExoticComponent } from 'react'
 import { MdxKeyboard, MdxStaff, Play } from '@/components/mdx'
 import type { UnitMeta } from '@/learning/types'
 import { parseUnitMeta } from './parse'
@@ -37,4 +37,16 @@ export async function loadUnitBody(unit: UnitMeta) {
   const load = bodies[`/content/${LOCALE}/${unit.course}/${unit.slug}.mdx`]
   if (!load) throw new Error(`content not found: ${unit.id}`)
   return (await load()).default
+}
+
+const lazyBodies = new Map<string, LazyExoticComponent<ComponentType<{ components?: Record<string, ComponentType<never>> }>>>()
+
+/** 単元本文の lazy 部品（単元ごとに 1 つだけ作って使い回す） */
+export function unitBody(unit: UnitMeta) {
+  let body = lazyBodies.get(unit.id)
+  if (!body) {
+    body = lazy(() => loadUnitBody(unit).then((c) => ({ default: c })))
+    lazyBodies.set(unit.id, body)
+  }
+  return body
 }
