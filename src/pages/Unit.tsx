@@ -14,16 +14,7 @@ export default function Unit() {
 
   if (!unit) return <p>単元が見つからない。</p>
   const Body = unitBody(unit)
-  if (!unlockedUnits(UNITS, progress).has(unit.id)) {
-    return (
-      <div className="flex flex-col gap-3">
-        <p>この単元はまだ解放されていない。前の単元に合格すると開く。</p>
-        <Link to={`/course/${courseId}`} className="underline">
-          コースに戻る
-        </Link>
-      </div>
-    )
-  }
+  const locked = !unlockedUnits(UNITS, progress).has(unit.id)
 
   return (
     <div className="flex flex-col gap-6">
@@ -31,6 +22,11 @@ export default function Unit() {
         コースに戻る
       </Link>
       <h1 className="text-2xl font-semibold">{unit.title}</h1>
+      {locked && (
+        <p role="note" className="rounded-md border border-amber-500/50 bg-amber-500/10 p-3 text-sm">
+          前の単元にまだ合格していない。このまま進めてもよい。
+        </p>
+      )}
       {step === 'lesson' ? (
         <>
           <article className="prose dark:prose-invert max-w-none">
