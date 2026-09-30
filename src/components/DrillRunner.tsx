@@ -69,7 +69,8 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
     setPicked(undefined)
     setKeys([])
     setPhase('asking')
-    play(next.play)
+    // 五線譜リーディングなど、出題音を鳴らすと答えが分かるドリルは play が空
+    if (next.play.length > 0) play(next.play)
   }
 
   const start = () => {
@@ -141,10 +142,12 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {q.prompt}
-          <Button variant="outline" onClick={() => play(answered && q.reveal ? q.reveal : q.play)}>
-            <Volume2Icon data-icon="inline-start" />
-            {answered ? '正解を聴く' : 'もう一度聴く'}
-          </Button>
+          {(q.play.length > 0 || answered) && (
+            <Button variant="outline" onClick={() => play(answered ? (q.reveal ?? q.play) : q.play)}>
+              <Volume2Icon data-icon="inline-start" />
+              {answered ? '正解を聴く' : 'もう一度聴く'}
+            </Button>
+          )}
           {audioError && <p className="text-destructive text-sm">音を再生できなかった。画面をタップしてもう一度試す。</p>}
 
           {q.answer.kind === 'choice' && (
