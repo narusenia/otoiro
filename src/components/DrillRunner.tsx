@@ -129,6 +129,10 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
   return (
     <div className="flex flex-col gap-4">
       <Progress value={(results.length / total) * 100} />
+      {/* 正誤を読み上げ（視覚の Badge は live 領域ではないため） */}
+      <p role="status" className="sr-only">
+        {answered ? (last ? t('drill.correct') : t('drill.wrong')) : ''}
+      </p>
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
