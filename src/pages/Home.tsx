@@ -5,6 +5,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/ca
 import { COURSES, unitsOf } from '@/content'
 import { currentStreak, localDate } from '@/learning/streak'
 import { useAppState } from '@/store'
+import { t } from '@/i18n'
 
 export default function Home() {
   const { progress, streak } = useAppState()
@@ -12,10 +13,10 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">コース</h1>
+        <h1 className="text-2xl font-semibold">{t('home.title')}</h1>
         <Badge variant={days > 0 ? 'default' : 'outline'}>
           <FlameIcon data-icon="inline-start" />
-          {days} 日連続
+          {t('home.streak', { days })}
         </Badge>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -29,7 +30,7 @@ export default function Home() {
                   <CardTitle>{c.title}</CardTitle>
                   <CardDescription>{c.description}</CardDescription>
                   <p className="text-muted-foreground text-xs">
-                    {units.length === 0 ? '準備中' : `${passed} / ${units.length} 単元 合格`}
+                    {units.length === 0 ? t('home.preparing') : t('home.passedCount', { passed, total: units.length })}
                   </p>
                 </CardHeader>
               </Card>

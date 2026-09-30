@@ -6,6 +6,7 @@ import { DRILL_LABEL } from '@/learning/labels'
 import { unlockedUnits } from '@/learning/progress'
 import type { DrillConfig } from '@/learning/types'
 import { useAppState } from '@/store'
+import { t } from '@/i18n'
 
 type Entry = { key: string; label: string; config: DrillConfig }
 
@@ -32,17 +33,17 @@ export default function Free() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-semibold">自由練習</h1>
+      <h1 className="text-2xl font-semibold">{t('free.title')}</h1>
       {selected ? (
         <>
-          <p className="text-muted-foreground text-sm">{selected.label}（解放済みの範囲から出題）</p>
+          <p className="text-muted-foreground text-sm">{t('free.scope', { label: selected.label })}</p>
           <DrillRunner key={selected.key} config={selected.config} judgePass={false} />
           <Button variant="ghost" onClick={() => setSelected(undefined)}>
-            メニューに戻る
+            {t('free.backToMenu')}
           </Button>
         </>
       ) : menu.length === 0 ? (
-        <p className="text-muted-foreground">解放された単元がない。</p>
+        <p className="text-muted-foreground">{t('free.empty')}</p>
       ) : (
         <div className="flex flex-col gap-2">
           {menu.map((e) => (

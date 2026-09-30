@@ -12,6 +12,7 @@ import type { Question } from '@/drills/types'
 import type { DrillConfig } from '@/learning/types'
 import { markStudiedToday, updateState, useAppState } from '@/store'
 import { isPassed, PASS_CORRECT, PASS_TOTAL, updateWeights } from '@/theory/quiz'
+import { t } from '@/i18n'
 
 type Phase = 'ready' | 'asking' | 'answered' | 'done'
 
@@ -56,7 +57,7 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
   const waitingForKeys = phase === 'asking' && q?.answer.kind === 'keys'
   useEffect(() => (waitingForKeys && useDock ? registerKeySink(pressKey) : undefined))
 
-  if (!drill) return <p className="text-muted-foreground">このドリルは準備中。</p>
+  if (!drill) return <p className="text-muted-foreground">{t('drill.preparing')}</p>
 
   const play = (steps: number[][]) => {
     setAudioError(false)
@@ -89,7 +90,7 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
     return (
       <Button size="lg" onClick={start}>
         <Volume2Icon data-icon="inline-start" />
-        スタート（{total} 問）
+        {t('drill.start', { total })}
       </Button>
     )
   }
@@ -101,20 +102,20 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
       <Card>
         <CardHeader>
           <CardTitle>
-            {correct} / {results.length} 問正解
+            {t('drill.score', { correct, done: results.length })}
           </CardTitle>
           <CardDescription>
             {judgePass
               ? passed
-                ? '合格。次の単元が解放された。'
-                : `あと少し。${PASS_TOTAL} 問中 ${PASS_CORRECT} 問正解で合格。`
-              : 'お疲れさま。'}
+                ? t('drill.passed')
+                : t('drill.almost', { total: PASS_TOTAL, need: PASS_CORRECT })
+              : t('drill.finished')}
           </CardDescription>
         </CardHeader>
         <CardFooter>
           <Button variant="outline" onClick={start}>
             <RotateCcwIcon data-icon="inline-start" />
-            もう一度
+            {t('drill.retry')}
           </Button>
         </CardFooter>
       </Card>
@@ -128,14 +129,18 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
   return (
     <div className="flex flex-col gap-4">
       <Progress value={(results.length / total) * 100} />
+      {/* 正誤を読み上げ（視覚の Badge は live 領域ではないため） */}
+      <p role="status" className="sr-only">
+        {answered ? (last ? t('drill.correct') : t('drill.wrong')) : ''}
+      </p>
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            {results.length + (answered ? 0 : 1)} / {total} 問目
+            {t('drill.progress', { n: results.length + (answered ? 0 : 1), total })}
             {answered && (
               <Badge variant={last ? 'default' : 'destructive'}>
                 {last ? <CheckIcon data-icon="inline-start" /> : <XIcon data-icon="inline-start" />}
-                {last ? '正解' : '不正解'}
+                {last ? t('drill.correct') : t('drill.wrong')}
               </Badge>
             )}
           </CardTitle>
@@ -145,10 +150,10 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
           {(q.play.length > 0 || answered) && (
             <Button variant="outline" onClick={() => play(answered ? (q.reveal ?? q.play) : q.play)}>
               <Volume2Icon data-icon="inline-start" />
-              {answered ? '正解を聴く' : 'もう一度聴く'}
+              {answered ? t('drill.hearAnswer') : t('drill.hearAgain')}
             </Button>
           )}
-          {audioError && <p className="text-destructive text-sm">音を再生できなかった。画面をタップしてもう一度試す。</p>}
+          {audioError && <p className="text-destructive text-sm">{t('drill.audioError')}</p>}
 
           {q.answer.kind === 'choice' && (
             <div className="grid grid-cols-2 gap-2">
@@ -179,10 +184,10 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
           {q.answer.kind === 'keys' && (
             <div className="flex flex-col gap-2">
               <p className="text-muted-foreground text-sm">
-                鍵盤で {q.answer.correct.length} 音を順に押す（{keys.length} / {q.answer.correct.length}）
+                {t('drill.pressKeys', { count: q.answer.correct.length, n: keys.length })}
               </p>
               {useDock ? (
-                <p className="text-muted-foreground text-xs">画面下のピアノで答える。</p>
+                <p className="text-muted-foreground text-xs">{t('drill.usePiano')}</p>
               ) : (
                 <Keyboard onPress={pressKey} disabled={answered} />
               )}
@@ -194,7 +199,7 @@ export function DrillRunner({ config, total = PASS_TOTAL, judgePass = true, onFi
         </CardContent>
         {answered && (
           <CardFooter>
-            <Button onClick={advance}>{results.length >= total ? '結果を見る' : '次へ'}</Button>
+            <Button onClick={advance}>{results.length >= total ? t('drill.showResult') : t('drill.next')}</Button>
           </CardFooter>
         )}
       </Card>

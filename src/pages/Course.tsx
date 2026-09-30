@@ -5,18 +5,19 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/ca
 import { COURSES, UNITS, unitsOf } from '@/content'
 import { unlockedUnits } from '@/learning/progress'
 import { useAppState } from '@/store'
+import { t } from '@/i18n'
 
 export default function Course() {
   const { courseId = '' } = useParams()
   const { progress } = useAppState()
   const course = COURSES.find((c) => c.id === courseId)
-  if (!course) return <p>コースが見つからない。</p>
+  if (!course) return <p>{t('course.notFound')}</p>
   const unlocked = unlockedUnits(UNITS, progress)
   const units = unitsOf(courseId)
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-semibold">{course.title}</h1>
-      {units.length === 0 && <p className="text-muted-foreground">このコースは準備中。</p>}
+      {units.length === 0 && <p className="text-muted-foreground">{t('course.preparing')}</p>}
       <div className="flex flex-col gap-3">
         {units.map((u) => {
           const open = unlocked.has(u.id)
@@ -29,18 +30,18 @@ export default function Course() {
                   {p?.passed && (
                     <Badge>
                       <CheckIcon data-icon="inline-start" />
-                      合格
+                      {t('course.passed')}
                     </Badge>
                   )}
                   {!open && (
                     <Badge variant="outline">
                       <LockIcon data-icon="inline-start" />
-                      前の単元が未合格
+                      {t('course.prevNotPassed')}
                     </Badge>
                   )}
                 </CardTitle>
                 <CardDescription>{u.summary}</CardDescription>
-                {p && <p className="text-muted-foreground text-xs">最高 {p.best} / 10 問（{p.attempts} 回挑戦）</p>}
+                {p && <p className="text-muted-foreground text-xs">{t('course.stats', { best: p.best, attempts: p.attempts })}</p>}
               </CardHeader>
             </Card>
           )
