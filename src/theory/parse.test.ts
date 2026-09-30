@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseNote, parseNotes } from './parse'
+import { parseKey, parseNote, parseNotes } from './parse'
 import { note } from './pitch'
 
 describe('parseNote', () => {
@@ -19,5 +19,16 @@ describe('parseNotes', () => {
   it('splits on whitespace', () => {
     expect(parseNotes(' C4  E4\nG4 ')).toHaveLength(3)
     expect(parseNotes('')).toEqual([])
+  })
+})
+
+describe('parseKey', () => {
+  it('parses major and minor keys', () => {
+    expect(parseKey('C')).toEqual({ letter: 0, accidental: 0, mode: 'major' })
+    expect(parseKey('Bb')).toEqual({ letter: 6, accidental: -1, mode: 'major' })
+    expect(parseKey('F#m')).toEqual({ letter: 3, accidental: 1, mode: 'minor' })
+  })
+  it('rejects garbage', () => {
+    for (const bad of ['', 'H', 'c', 'Cbb', 'Cm#']) expect(() => parseKey(bad)).toThrow(RangeError)
   })
 })
