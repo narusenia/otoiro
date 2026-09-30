@@ -50,6 +50,16 @@ export default function SettingsPage() {
         value={settings.theme}
         options={[['system', '端末に合わせる'], ['light', 'ライト'], ['dark', 'ダーク']]}
       />
+      <section className="flex flex-col gap-1 text-sm text-muted-foreground">
+        <h2 className="font-medium text-foreground">クレジット</h2>
+        <p>
+          ピアノ音源: Salamander Grand Piano V3 by Alexander Holm（
+          <a className="underline" href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noreferrer">
+            CC BY 3.0
+          </a>
+          、C2〜C7 を間引いて使用）
+        </p>
+      </section>
     </div>
   )
 }
