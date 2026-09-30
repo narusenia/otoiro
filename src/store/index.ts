@@ -14,7 +14,7 @@ import type { Weights } from '@/theory/quiz'
 export type Theme = 'system' | 'light' | 'dark'
 
 export type AppState = {
-  settings: { timbre: Timbre; noteStyle: NoteNameStyle; theme: Theme }
+  settings: { timbre: Timbre; noteStyle: NoteNameStyle; theme: Theme; showPiano: boolean }
   progress: Progress
   /** 出題項目ごとの苦手重み（キーはドリル側が決める項目 id。例: interval:M3） */
   weights: Weights
@@ -22,7 +22,7 @@ export type AppState = {
 }
 
 export const DEFAULT_STATE: AppState = {
-  settings: { timbre: 'piano', noteStyle: 'doremi', theme: 'system' },
+  settings: { timbre: 'piano', noteStyle: 'doremi', theme: 'system', showPiano: true },
   progress: {},
   weights: {},
   streak: { last: null, count: 0 },

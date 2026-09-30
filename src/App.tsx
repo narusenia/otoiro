@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Link, Route, Routes } from 'react-router'
 import { t } from '@/i18n'
+import { PianoDock } from '@/components/PianoDock'
 import Course from '@/pages/Course'
 import Free from '@/pages/Free'
 import Home from '@/pages/Home'
@@ -35,7 +36,7 @@ export default function App() {
         <Link to="/free">{t('nav.free')}</Link>
         <Link to="/settings">{t('nav.settings')}</Link>
       </nav>
-      <main className="p-4">
+      <main className={settings.showPiano ? 'p-4 pb-48' : 'p-4 pb-16'}>
         <Suspense>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -47,6 +48,7 @@ export default function App() {
         </Routes>
         </Suspense>
       </main>
+      <PianoDock />
     </BrowserRouter>
   )
 }
