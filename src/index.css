@@ -128,3 +128,34 @@
     @apply font-sans;
     }
 }
+/* 12 音（ピッチクラス）固有色。鍵盤・譜面・正誤表示で共通利用 */
+:root {
+  --pitch-0: oklch(0.74 0.15 25);
+  --pitch-1: oklch(0.74 0.15 55);
+  --pitch-2: oklch(0.74 0.15 85);
+  --pitch-3: oklch(0.74 0.15 115);
+  --pitch-4: oklch(0.74 0.15 145);
+  --pitch-5: oklch(0.74 0.15 175);
+  --pitch-6: oklch(0.74 0.15 205);
+  --pitch-7: oklch(0.74 0.15 235);
+  --pitch-8: oklch(0.74 0.15 265);
+  --pitch-9: oklch(0.74 0.15 295);
+  --pitch-10: oklch(0.74 0.15 325);
+  --pitch-11: oklch(0.74 0.15 355);
+  --pitch-fg: oklch(0.2 0 0);
+}
+
+.dark {
+  --pitch-0: oklch(0.78 0.13 25);
+  --pitch-1: oklch(0.78 0.13 55);
+  --pitch-2: oklch(0.78 0.13 85);
+  --pitch-3: oklch(0.78 0.13 115);
+  --pitch-4: oklch(0.78 0.13 145);
+  --pitch-5: oklch(0.78 0.13 175);
+  --pitch-6: oklch(0.78 0.13 205);
+  --pitch-7: oklch(0.78 0.13 235);
+  --pitch-8: oklch(0.78 0.13 265);
+  --pitch-9: oklch(0.78 0.13 295);
+  --pitch-10: oklch(0.78 0.13 325);
+  --pitch-11: oklch(0.78 0.13 355);
+}
