@@ -48,7 +48,8 @@ export function Staff({ notes, clef = 'treble', fifths = 0, colors = [], classNa
       const staveNotes = notes.map((n, i) => {
         const sn = new StaveNote({ keys: [vexKey(n)], duration: 'q', clef })
         // stem・加線は setStyle の対象外で既定の黒になるため個別に指定
-        const c = colors[i] ?? 'currentColor'
+        const raw = colors[i]
+        const c = raw ? `color-mix(in oklab, ${raw} calc(100% - var(--staff-darken)), black)` : 'currentColor'
         const style = { fillStyle: c, strokeStyle: c }
         sn.setStyle(style)
         sn.setStemStyle(style)
