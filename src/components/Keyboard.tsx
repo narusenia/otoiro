@@ -55,6 +55,7 @@ export function Keyboard({
     const target = whites.findIndex((m) => m >= 60)
     if (target >= 0) el.scrollLeft = Math.max(0, target * WHITE_W - el.clientWidth / 2 + WHITE_W)
     // 範囲が変わったときだけ再計算
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [from, to])
 
   const press = (m: number) => {
