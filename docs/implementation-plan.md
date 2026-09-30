@@ -5,9 +5,9 @@
 
 ## Phase 0: 土台
 
-- [ ] git init、GitHub リポジトリ作成
-- [ ] Vite + React + TypeScript 作成
-- [ ] shadcn 初期化（`--preset b1D0dxoG`）
+- [ ] git init（済）、GitHub リポジトリ作成
+- [x] Vite + React + TypeScript 作成
+- [x] shadcn 初期化（`--preset b1D0dxoG`）
 - [ ] ルーティング（ホーム / コース / 単元 / 自由練習 / 設定）
 - [ ] `wrangler.jsonc`（Static Assets, SPA fallback）→ `wrangler deploy` で初回疎通
 - [ ] Workers Builds を GitHub 連携、PR プレビュー確認
